@@ -26,9 +26,19 @@ class Cell:
                          'right' : self.index + 1,
                          'bottom' : self.index + nrows,
                          'left' : self.index - 1}
+        
+        if self.x == 0:
+            del self.neighbors['left']
+        if self.x == ncols:
+            del self.neighbors['right']
+        if self.y == 0:
+            del self.neighbors['top']
+        if self.y == nrows:
+            del self.neighbors['bottom']
         for n in self.neighbors.keys():
             if self.neighbors[n] < 0 or self.neighbors[n] > (nrows * ncols):
                 del self.neighbors[n]
+        
 
     def Check_Neighbors(self, cells):
         #print(self.neighbors)
@@ -42,7 +52,7 @@ class Cell:
         if len(available_neighbors) > 0:
             chosen_neighbor = random.randint(0, len(available_neighbors)-1)
             chosen_neighbor = available_neighbors[chosen_neighbor]
-        print("chosen: ", chosen_neighbor)
+        #print("chosen: ", chosen_neighbor)
         #print("Length of avail neighbors: ", len(available_neighbors))
         #print(available_neighbors)
         return chosen_neighbor
