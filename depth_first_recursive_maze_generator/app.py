@@ -1,4 +1,3 @@
-from operator import ne
 import sys
 import pygame
 import random
@@ -11,7 +10,6 @@ pygame.init()
 size = height, width = (320, 240)
 cell_width = 10
 cell_height = 10
-print(width)
 ncols = width / cell_width
 nrows = height / cell_height
 
@@ -24,17 +22,17 @@ for j in range(ncols):
     for i in range(nrows):
         cell = Cell(i, j, cell_width, cell_height, ncols, nrows)
         cells.append(cell)
-        #print(cell.index)
 
 print("ncols: ", ncols)
 #print("nrows: ", nrows)
 #print("cells: ", nrows * ncols)
 #print("cells: ", len(cells))
 select_cell = random.randint(0, len(cells)-1)
-#select_cell = 33
+select_cell = (nrows*ncols) - nrows
 current = cells[select_cell]
-#print("starting:  ", current.index)
-
+print("starting:  ", current.index)
+print(current.neighbors)
+print(current.x, ", ", current.y)
 cell_stack = []
 
 while True:
@@ -48,6 +46,7 @@ while True:
     current.visited = True
     #print("Current:   ", current.index, ", x: ", current.x, ", y: ", current.y)
     next_cell = current.Check_Neighbors(cells)
+    #next_cell = current.index
     #print(current.neighbors)
     #print("next cell: ", next_cell)
     if next_cell is not None:
@@ -57,10 +56,11 @@ while True:
         cell_stack.append(current)
         current = next_cell
     else:
-        current = cell_stack.pop()
+        if len(cell_stack) > 0:
+            current = cell_stack.pop()
     
     current.Highlight(screen)
     #print(current)
     pygame.display.update()
     #pygame.display.flip()
-    clock.tick(10)
+    clock.tick(60)

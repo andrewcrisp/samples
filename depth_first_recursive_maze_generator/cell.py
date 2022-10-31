@@ -1,4 +1,3 @@
-from logging import warn, warning
 import random
 import pygame
 from colors import *
@@ -17,7 +16,6 @@ class Cell:
         self.bottom_wall = ((self.x, self.y + self.cell_height), (self.x + self.cell_width, self.y + self.cell_height))
         self.left_wall = ((self.x, self.y), (self.x, self.y + self.cell_height))
 
-        #self.index = (x/self.cell_width) + ((y/self.cell_height) * (ncols))
         self.walls = {'top' : True,
                      'right' : True,
                      'bottom' : True,
@@ -29,11 +27,11 @@ class Cell:
         
         if self.x == 0:
             del self.neighbors['left']
-        if self.x == ncols:
+        if self.x == (nrows - 1) * width:
             del self.neighbors['right']
         if self.y == 0:
             del self.neighbors['top']
-        if self.y == nrows:
+        if self.y == (ncols - 1) * height:
             del self.neighbors['bottom']
         for n in self.neighbors.keys():
             if self.neighbors[n] < 0 or self.neighbors[n] > (nrows * ncols):
@@ -41,25 +39,17 @@ class Cell:
         
 
     def Check_Neighbors(self, cells):
-        #print(self.neighbors)
         available_neighbors = []
         chosen_neighbor = None
         for n in self.neighbors.keys():
-            #print(n)
-            #print(self.neighbors[n])
             if not cells[self.neighbors[n]].visited:
                 available_neighbors.append(self.neighbors[n])
         if len(available_neighbors) > 0:
             chosen_neighbor = random.randint(0, len(available_neighbors)-1)
             chosen_neighbor = available_neighbors[chosen_neighbor]
-        #print("chosen: ", chosen_neighbor)
-        #print("Length of avail neighbors: ", len(available_neighbors))
-        #print(available_neighbors)
         return chosen_neighbor
 
     def Open_Wall(self, neighbor):
-        #print("my index:       ", self.index)
-        #print("neighbor index: ", neighbor.index)
         removed = None
         if self.index == neighbor.index + 1:
             self.walls['left'] = False
