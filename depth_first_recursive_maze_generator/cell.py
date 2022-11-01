@@ -3,11 +3,11 @@ import pygame
 from colors import *
 
 class Cell:
-    def __init__(self, x, y, width, height, ncols, nrows):
+    def __init__(self, x, y, width, height, xmax, ymax):
         self.visited = False
         self.cell_width = width
         self.cell_height = height
-        self.index = (x + (y*nrows))
+        self.index = (x + (y*xmax))
         self.x = x * self.cell_width
         self.y = y * self.cell_height
         
@@ -20,21 +20,21 @@ class Cell:
                      'right' : True,
                      'bottom' : True,
                      'left' : True}
-        self.neighbors = {'top' : self.index - nrows,
+        self.neighbors = {'top' : self.index - xmax,
                          'right' : self.index + 1,
-                         'bottom' : self.index + nrows,
+                         'bottom' : self.index + xmax,
                          'left' : self.index - 1}
         
         if self.x == 0:
             del self.neighbors['left']
-        if self.x == (nrows - 1) * width:
+        if self.x == (xmax - 1) * width:
             del self.neighbors['right']
         if self.y == 0:
             del self.neighbors['top']
-        if self.y == (ncols - 1) * height:
+        if self.y == (ymax - 1) * height:
             del self.neighbors['bottom']
         for n in self.neighbors.keys():
-            if self.neighbors[n] < 0 or self.neighbors[n] > (nrows * ncols):
+            if self.neighbors[n] < 0 or self.neighbors[n] > (xmax * ymax):
                 del self.neighbors[n]
         
 
