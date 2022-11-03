@@ -11,11 +11,11 @@ class Cell:
         self.x = x * self.cell_width
         self.y = y * self.cell_height
         
-        self.top_wall = ((self.x, self.y), (self.x + self.cell_width, self.y))
-        self.right_wall = ((self.x + self.cell_width, self.y), (self.x + self.cell_width, self.y + self.cell_height))
+        self.top_wall =    ((self.x, self.y)                   , (self.x + self.cell_width, self.y))
+        self.right_wall =  ((self.x + self.cell_width, self.y) , (self.x + self.cell_width, self.y + self.cell_height))
         self.bottom_wall = ((self.x, self.y + self.cell_height), (self.x + self.cell_width, self.y + self.cell_height))
-        self.left_wall = ((self.x, self.y), (self.x, self.y + self.cell_height))
-
+        self.left_wall =   ((self.x, self.y)                   , (self.x, self.y + self.cell_height))
+        self.rect = pygame.Rect((self.x, self.y), (self.cell_width, self.cell_height))
         self.walls = {'top' : True,
                      'right' : True,
                      'bottom' : True,
@@ -37,7 +37,6 @@ class Cell:
             if self.neighbors[n] < 0 or self.neighbors[n] > (xmax * ymax):
                 del self.neighbors[n]
         
-
     def Check_Neighbors(self, cells):
         available_neighbors = []
         chosen_neighbor = None
@@ -50,22 +49,18 @@ class Cell:
         return chosen_neighbor
 
     def Open_Wall(self, neighbor):
-        removed = None
         if self.index == neighbor.index + 1:
             self.walls['left'] = False
-            removed = "left"
         elif self.index == neighbor.index - 1:
             self.walls['right'] = False
-            removed = "right"
         elif self.index > neighbor.index:
             self.walls['top'] = False
-            removed = "top"
         elif self.index < neighbor.index:
             self.walls['bottom'] = False
-            removed = "bottom"
-        #print(removed)
 
     def Show(self, surface):
+        if self.visited:
+            surface.fill(mountbatten_pink, self.rect)
         if self.walls['top']:
             pygame.draw.line(surface, white, self.top_wall[0], self.top_wall[1])
         if self.walls['right']:
@@ -74,11 +69,6 @@ class Cell:
             pygame.draw.line(surface, white, self.bottom_wall[0], self.bottom_wall[1])
         if self.walls['left']:
             pygame.draw.line(surface, white, self.left_wall[0], self.left_wall[1])
-        #print(self.index)
 
     def Highlight(self, surface):
-        r = pygame.Rect((self.x, self.y), (self.cell_width, self.cell_height))
-        surface.fill(highlight, r)
-        #print(self.walls)
-        #print('highlighting')
-        #pygame.draw.rect(surface, highlight, r, 0)
+        surface.fill(turquoise, self.rect)
