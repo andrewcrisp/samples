@@ -11,10 +11,10 @@ class Maze_Cell:
                      'bottom' : True,
                      'left' : True}
         self.visited = False
-        self.neighbors = {'top' : self.index - maze_width,
-                         'right' : self.index + 1,
+        self.neighbors = {'top'   : self.index - maze_width,
+                         'right'  : self.index + 1,
                          'bottom' : self.index + maze_width,
-                         'left' : self.index - 1}
+                         'left'   : self.index - 1}
         if self.x == 0:
             del self.neighbors['left']
         if self.x == (maze_width - 1):

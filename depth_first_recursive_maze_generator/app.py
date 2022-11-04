@@ -19,9 +19,8 @@ while True:
 #for i in range(6):
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
-
-    for cell in maze.cells:
-        cell.Show(screen, cell_width, cell_height)
+    
+    maze.Draw(screen, cell_width, cell_height)
     pygame.display.flip()
     clock.tick(1)
     
