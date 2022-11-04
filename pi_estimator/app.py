@@ -1,3 +1,6 @@
+# Based on Coding Train:
+# https://thecodingtrain.com/challenges/161-estimating-pi-from-random-numbers
+
 import math
 pie = 0.123456789
 total = 0
