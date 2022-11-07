@@ -10,5 +10,5 @@ The langauge used for each sample may vary. Each sample should be self contained
 
 ### Pyhon
 
-I'm using conda environments to keep things coordinated. Install an anaconda environment of your choice (I use miniconda[https://docs.conda.io/en/latest/miniconda.html]), recreate the conda environment from the environment.yml file, and start in the app.py file. app.py should always be the demonstration kickoff script.
+I'm using conda environments to keep things coordinated. Install an anaconda environment of your choice (I use [miniconda](https://docs.conda.io/en/latest/miniconda.html)), recreate the conda environment from the environment.yml file, and start in the app.py file. app.py should always be the demonstration kickoff script.
 
